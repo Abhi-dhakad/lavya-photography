@@ -1276,6 +1276,155 @@
         body.loading {
             overflow: hidden;
         }
+
+        /* Floating Social Chat Buttons */
+        .floating-chat-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            font-family: var(--font-body);
+            pointer-events: none; /* Let clicks pass through gaps */
+        }
+
+        .floating-chat-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+            font-size: 1.6rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            pointer-events: auto; /* Re-enable pointer events for buttons */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Floating labels that show on hover */
+        .floating-chat-btn::before {
+            content: attr(data-label);
+            position: absolute;
+            right: 75px;
+            background: rgba(11, 12, 16, 0.95);
+            color: white;
+            border: 1px solid var(--gold);
+            border-radius: 6px;
+            padding: 6px 14px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            opacity: 0;
+            transform: translateX(15px);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            pointer-events: none;
+        }
+
+        .floating-chat-btn:hover::before {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* WhatsApp floating button styling */
+        .floating-chat-btn.whatsapp {
+            background: linear-gradient(135deg, #25d366, #128c7e);
+            box-shadow: 0 8px 32px rgba(37, 211, 102, 0.25);
+        }
+
+        .floating-chat-btn.whatsapp::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 50%;
+            border: 1px solid #25d366;
+            opacity: 0.5;
+            animation: pulseWhatsApp 2s infinite ease-out;
+            pointer-events: none;
+        }
+
+        .floating-chat-btn.whatsapp:hover {
+            transform: scale(1.1) translateY(-3px);
+            box-shadow: 0 12px 40px rgba(37, 211, 102, 0.45);
+        }
+
+        /* Instagram floating button styling */
+        .floating-chat-btn.instagram {
+            background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            box-shadow: 0 8px 32px rgba(220, 39, 67, 0.25);
+        }
+
+        .floating-chat-btn.instagram::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 50%;
+            border: 1px solid #dc2743;
+            opacity: 0.5;
+            animation: pulseInstagram 2s infinite ease-out;
+            pointer-events: none;
+        }
+
+        .floating-chat-btn.instagram:hover {
+            transform: scale(1.1) translateY(-3px);
+            box-shadow: 0 12px 40px rgba(220, 39, 67, 0.45);
+        }
+
+        @keyframes pulseWhatsApp {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+
+        @keyframes pulseInstagram {
+            0% {
+                box-shadow: 0 0 0 0 rgba(220, 39, 67, 0.6);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(220, 39, 67, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(220, 39, 67, 0);
+            }
+        }
+
+        /* Fully mobile responsive behavior */
+        @media (max-width: 768px) {
+            .floating-chat-container {
+                bottom: 20px;
+                right: 20px;
+                gap: 12px;
+            }
+            .floating-chat-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.3rem;
+            }
+            /* Hide floating text labels on touch mobile screens to prevent overlap */
+            .floating-chat-btn::before {
+                display: none !important;
+            }
+        }
     </style>
 </head>
 
@@ -1606,10 +1755,17 @@
                 </div>
             </div>
             <div class="info-item">
+                <i class="fab fa-whatsapp"></i>
+                <div>
+                    <h4>WhatsApp</h4>
+                    <p><a href="https://wa.me/917999630264?text=Hi%20Lavy%20Photo%20Production!%20I'm%20visiting%20your%20website%20and%20would%20love%20to%20chat%20about%20booking%20a%20photography%20session." target="_blank">Chat with us</a></p>
+                </div>
+            </div>
+            <div class="info-item">
                 <i class="fas fa-envelope"></i>
                 <div>
                     <h4>Email</h4>
-                    <p>anandverma0187@gmail.com</p>
+                    <p><a href="mailto:anandverma0187@gmail.com">anandverma0187@gmail.com</a></p>
                 </div>
             </div>
         </div>
@@ -1644,9 +1800,10 @@
     <footer>
         <h2 class="footer-logo">LAVYA.</h2>
         <div class="social-links">
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="https://instagram.com/lavy_photo_production" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://wa.me/917999630264?text=Hi%20Lavy%20Photo%20Production!%20I'm%20visiting%20your%20website%20and%20would%20love%20to%20chat%20about%20booking%20a%20photography%20session." target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
         </div>
         <p class="copyright">&copy; 2026 Lavya Photo Production. All Rights Reserved.</p>
     </footer>
@@ -1696,7 +1853,7 @@
                 }, { duration: 500, fill: "forwards" });
             });
 
-            const hoverElements = document.querySelectorAll('a, button, .gallery-item');
+            const hoverElements = document.querySelectorAll('a, button, .gallery-item, .floating-chat-btn');
             hoverElements.forEach(el => {
                 el.addEventListener('mouseenter', () => {
                     cursorOutline.style.width = '60px';
@@ -2052,6 +2209,16 @@
 
         });
     </script>
+
+    <!-- Floating Chat Buttons (Directly Shown) -->
+    <div class="floating-chat-container">
+        <a href="https://instagram.com/lavy_photo_production" target="_blank" class="floating-chat-btn instagram" data-label="DM on Instagram" aria-label="DM on Instagram">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://wa.me/917999630264?text=Hi%20Lavy%20Photo%20Production!%20I'm%20visiting%20your%20website%20and%20would%20love%20to%20chat%20about%20booking%20a%20photography%20session." target="_blank" class="floating-chat-btn whatsapp" data-label="Chat on WhatsApp" aria-label="Chat on WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
 </body>
 
 </html>
